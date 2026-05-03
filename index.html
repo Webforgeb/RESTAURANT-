@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Culinary Craft | Exquisite Dining</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;600;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "tertiary-fixed": "#dfe4e0",
+          "primary-fixed": "#d0e9d4",
+          "outline-variant": "#c3c8c1",
+          "on-primary-fixed": "#0b2013",
+          "surface-tint": "#4d6453",
+          "on-surface": "#1a1c1c",
+          "on-surface-variant": "#434843",
+          "surface-container-low": "#f3f3f4",
+          "primary-fixed-dim": "#b4cdb8",
+          "on-tertiary": "#ffffff",
+          "tertiary-container": "#272d2a",
+          "on-secondary-container": "#626564",
+          "surface-bright": "#f9f9f9",
+          "tertiary": "#131816",
+          "surface-container-lowest": "#ffffff",
+          "background": "#f9f9f9",
+          "inverse-primary": "#b4cdb8",
+          "surface-container-highest": "#e2e2e2",
+          "inverse-surface": "#2f3131",
+          "error": "#ba1a1a",
+          "on-background": "#1a1c1c",
+          "primary": "#061b0e",
+          "secondary-container": "#e1e3e2",
+          "on-secondary": "#ffffff",
+          "on-primary": "#ffffff",
+          "surface": "#f9f9f9",
+          "on-primary-container": "#819986",
+          "outline": "#737973",
+          "primary-container": "#1b3022",
+          "surface-container": "#eeeeee",
+          "secondary": "#5c5f5e",
+          "surface-container-high": "#e8e8e8",
+          "on-tertiary-container": "#8f9491",
+          "error-container": "#ffdad6",
+          "surface-variant": "#e2e2e2"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.125rem",
+          "lg": "0.25rem",
+          "xl": "0.5rem",
+          "full": "0.75rem"
+        },
+        "fontFamily": {
+          "headline-lg": ["Noto Serif"],
+          "body-md": ["Manrope"],
+          "headline-md": ["Noto Serif"],
+          "label-sm": ["Manrope"],
+          "body-lg": ["Manrope"],
+          "display-xl": ["Noto Serif"]
+        },
+        "fontSize": {
+          "headline-lg": ["3rem", {"lineHeight": "1.2", "fontWeight": "400"}],
+          "body-md": ["1rem", {"lineHeight": "1.6", "fontWeight": "400"}],
+          "headline-md": ["2rem", {"lineHeight": "1.3", "fontWeight": "400"}],
+          "label-sm": ["0.875rem", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+          "body-lg": ["1.125rem", {"lineHeight": "1.7", "fontWeight": "400"}],
+          "display-xl": ["4.5rem", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "400"}]
+        }
+      },
+    },
+  }
+</script>
+<style>
+  .material-symbols-outlined {
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  }
+  body {
+    background-color: #f9f9f9;
+    color: #1a1c1c;
+    scroll-behavior: smooth;
+    min-height: max(884px, 100dvh);
+  }
+  .hero-gradient {
+    background: linear-gradient(rgba(6, 27, 14, 0.6), rgba(6, 27, 14, 0.6));
+  }
+
+/* ── MENU TAB SYSTEM ── */
+.menu-tab-btn {
+font-family: ‘Manrope’, sans-serif;
+font-size: 0.875rem;
+font-weight: 600;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+color: #5c5f5e;
+background: none;
+border: none;
+padding-bottom: 16px;
+cursor: pointer;
+position: relative;
+transition: color 0.3s ease;
+white-space: nowrap;
+}
+.menu-tab-btn::after {
+content: ‘’;
+position: absolute;
+bottom: -1px;
+left: 0; right: 0;
+height: 2px;
+background: #1b3022;
+transform: scaleX(0);
+transition: transform 0.3s ease;
+}
+.menu-tab-btn:hover { color: #061b0e; }
+.menu-tab-btn.active { color: #061b0e; }
+.menu-tab-btn.active::after { transform: scaleX(1); }
+
+/* ── MENU PANELS ── */
+.menu-panel { display: none; }
+.menu-panel.active {
+display: block;
+animation: fadeUp 0.35s ease forwards;
+}
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(14px); }
+to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── MENU CATEGORY ── */
+.menu-category {
+max-width: 680px;
+margin: 0 auto 56px;
+}
+.category-header {
+display: flex;
+align-items: center;
+justify-content: space-between;
+border-bottom: 1px solid #c3c8c1;
+padding-bottom: 14px;
+margin-bottom: 32px;
+}
+.category-title {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 1.4rem;
+font-weight: 400;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: #061b0e;
+}
+.category-icon {
+font-size: 1.2rem;
+color: #4d6453;
+}
+
+/* ── MENU ITEMS ── */
+.menu-items { display: flex; flex-direction: column; gap: 18px; }
+.menu-item { display: flex; align-items: baseline; }
+.item-name {
+font-family: ‘Cormorant Garamond’, serif;
+font-size: 1.15rem;
+font-weight: 400;
+color: #061b0e;
+white-space: nowrap;
+}
+.item-dots {
+flex: 1;
+border-bottom: 1px dotted #aaa;
+margin: 0 10px;
+margin-bottom: 4px;
+}
+.item-price {
+font-family: ‘Manrope’, sans-serif;
+font-size: 0.78rem;
+font-weight: 600;
+letter-spacing: 0.08em;
+color: #4d6453;
+white-space: nowrap;
+}
+
+/* mobile nav */
+#mobileNavbar { display: none; }
+#mobileNavbar.open { display: block; }
+</style>
+
+</head>
+<body class="font-body-md text-body-md">
+
+<!-- TopAppBar -->
+
+<nav class="fixed top-0 z-50 w-full bg-stone-50/80 backdrop-blur-md border-b border-stone-200/40 h-24">
+  <div class="flex justify-between items-center w-full px-8 md:px-16 max-w-screen-2xl mx-auto h-full">
+    <div class="flex items-center">
+      <span class="material-symbols-outlined text-stone-900 cursor-pointer" id="mobileMenuBtn">menu</span>
+    </div>
+    <!-- Mobile Navbar -->
+    <div id="mobileNavbar" class="fixed top-24 left-0 right-0 bg-surface/95 backdrop-blur-md border-b border-stone-200/40 z-40">
+      <div class="flex flex-col gap-6 py-8 px-8 text-center">
+        <a href="#menu" class="text-xl font-serif tracking-widest text-stone-900 hover:opacity-60 transition-opacity">Menu</a>
+        <a href="#story" class="text-xl font-serif tracking-widest text-stone-900 hover:opacity-60 transition-opacity">Story</a>
+        <a href="#reservations" class="text-xl font-serif tracking-widest text-stone-900 hover:opacity-60 transition-opacity">Reservations</a>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-3xl">restaurant</span>
+      <span class="text-2xl font-serif font-bold tracking-tight text-emerald-900">The Culinary Craft</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <div class="hidden md:flex gap-8 font-serif tracking-widest uppercase text-sm">
+        <a class="text-stone-900 border-b border-stone-900 pb-1 hover:text-stone-600 transition-all duration-500" href="#menu">Menu</a>
+        <a class="text-stone-400 hover:text-stone-600 transition-all duration-500" href="#about">Story</a>
+        <a class="text-stone-400 hover:text-stone-600 transition-all duration-500" href="#reservations">Reservations</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main>
+<!-- Hero Section -->
+<section class="relative h-screen flex items-center justify-center overflow-hidden pt-20">
+  <div class="absolute inset-0 z-0">
+    <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBozBOacmfYM4OV6nfMt1nNu1EdzQaTK2VhiqMWwQlQiVwtEjdC4nYeX5oE0oGdmitc5Q9F_o0-Lp3QG3iHgrt6NO7A12FpWJLPOsihkW3VzxpDmKtaSCotM5b6D9B3TdiwaMJKl9QAj7_9QPz1DZmmwpuwZQU-lQqXdFpfW77oTBPeTmjsgNz8ZOPeismPT4chgW7hzJxwgm-zPVtAA31Ppzri1Js60xvE82eg09Vc1xluLEaXLtNKY4hzFU9bQnICO4U_b0EoruI" alt="Restaurant interior"/>
+    <div class="absolute inset-0 hero-gradient"></div>
+  </div>
+  <div class="relative z-10 text-center px-8 max-w-4xl">
+    <h1 class="font-display-xl text-display-xl text-white mb-6">Exquisite Flavors, Timeless Craft</h1>
+    <p class="font-body-lg text-body-lg text-primary-fixed mb-12 max-w-2xl mx-auto opacity-90">
+      Experience the finest dining with our handcrafted menu, where tradition meets modern innovation in every bite.
+    </p>
+    <div class="flex flex-col md:flex-row items-center justify-center gap-6">
+      <a class="bg-white text-primary px-12 py-4 font-label-sm uppercase tracking-widest hover:bg-primary-fixed transition-colors duration-300" href="#menu">Order Now</a>
+      <a class="border border-white text-white px-12 py-4 font-label-sm uppercase tracking-widest hover:bg-white/10 transition-colors duration-300" href="#reservations">Book Table</a>
+    </div>
+  </div>
+</section>
+
+<!-- About Section -->
+
+<section class="py-[120px] px-16 bg-white" id="about">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-24 items-center">
+    <div class="relative">
+      <img class="w-full aspect-[4/5] object-cover shadow-2xl" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB1tmMA7uz2CLNrFpefncO5PNl_D0kyf1iblzemSo1Yfm4xaF2ADmK9Zq5WDK0RFKYm4MYfHHom7BNp4qkLnHRhvSoQkz2Zxl4KBIJmKmkFwLwZW3GCZqXZKNfIDg5l_5xbRdt3RYEhCH9NeRuP6EeRdtcJvePGgsLzY4yPBVd6Puif7i3AFcgUdqbn6wE4W7EzZd3iVzrqMXZq8pVbgr1OYrohsoJX9_eLRED64R8dSJR7cH8P-LWgw26KVuuNlNKslpLhUzoZhk" alt="Chef at work"/>
+      <div class="absolute -bottom-8 -right-8 w-64 h-64 border-8 border-primary-container z-[-1] hidden md:block"></div>
+    </div>
+    <div>
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-8">Our Story</h2>
+      <p class="font-body-lg text-body-lg text-secondary mb-8 leading-relaxed">
+        Born from a singular vision of culinary excellence, The Culinary Craft is more than just a restaurant; it is a sanctuary for those who appreciate the artistry of food. We believe that every ingredient has a story, and our mission is to tell it through sophisticated techniques and bold, honest flavors.
+      </p>
+      <p class="font-body-md text-body-md text-secondary mb-12">
+        Our team of master chefs meticulously sources seasonal produce from local artisans, ensuring that every dish served is a reflection of the earth's natural bounty and our unwavering commitment to quality.
+      </p>
+      <div class="border-l-4 border-primary-container pl-8 py-2 italic font-headline-md text-primary/80">
+        "Cooking is an act of love, and dining is an act of shared humanity."
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     INTERACTIVE MENU — TAB SYSTEM
+════════════════════════════════════════ -->
+
+<section class="py-[120px] px-16 bg-surface-container-low" id="menu">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Curated Selections</h2>
+      <p class="font-body-md text-body-md text-secondary">A journey through our seasonal offerings.</p>
+    </div>
+
+
+<!-- Tabs -->
+<div class="flex flex-wrap justify-center gap-8 mb-16 border-b border-outline-variant pb-2" id="menu-tabs">
+  <button class="menu-tab-btn active" data-tab="coffee">Coffee</button>
+  <button class="menu-tab-btn" data-tab="matcha">Matcha</button>
+  <button class="menu-tab-btn" data-tab="sweet">Sweet Drinks</button>
+  <button class="menu-tab-btn" data-tab="pourover">Pour-Over</button>
+  <button class="menu-tab-btn" data-tab="noncoffee">Non Coffee</button>
+</div>
+
+<!-- ── PANEL: COFFEE ── -->
+<div class="menu-panel active" id="tab-coffee">
+  <div class="menu-category">
+    <div class="category-header">
+      <span class="category-title">Coffee Classics</span>
+      <span class="material-symbols-outlined category-icon">coffee</span>
+    </div>
+    <div class="menu-items">
+      <div class="menu-item"><span class="item-name">Espresso</span><span class="item-dots"></span><span class="item-price">20 DH</span></div>
+      <div class="menu-item"><span class="item-name">Americano</span><span class="item-dots"></span><span class="item-price">20 DH</span></div>
+      <div class="menu-item"><span class="item-name">Cortado</span><span class="item-dots"></span><span class="item-price">28 DH</span></div>
+      <div class="menu-item"><span class="item-name">Flat White</span><span class="item-dots"></span><span class="item-price">28 DH</span></div>
+      <div class="menu-item"><span class="item-name">Cappuccino</span><span class="item-dots"></span><span class="item-price">32 DH</span></div>
+      <div class="menu-item"><span class="item-name">Caffè Latte</span><span class="item-dots"></span><span class="item-price">32 DH</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PANEL: MATCHA ── -->
+<div class="menu-panel" id="tab-matcha">
+  <div class="menu-category">
+    <div class="category-header">
+      <span class="category-title">Matcha Bar</span>
+      <span class="material-symbols-outlined category-icon">spa</span>
+    </div>
+    <div class="menu-items">
+      <div class="menu-item"><span class="item-name">Matcha Latte</span><span class="item-dots"></span><span class="item-price">45 DH</span></div>
+      <div class="menu-item"><span class="item-name">Strawberry / Raspberry</span><span class="item-dots"></span><span class="item-price">55 DH</span></div>
+      <div class="menu-item"><span class="item-name">Mango / Passion Fruit</span><span class="item-dots"></span><span class="item-price">55 DH</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PANEL: SWEET DRINKS ── -->
+<div class="menu-panel" id="tab-sweet">
+  <div class="menu-category">
+    <div class="category-header">
+      <span class="category-title">Sweet Drinks</span>
+      <span class="material-symbols-outlined category-icon">icecream</span>
+    </div>
+    <div class="menu-items">
+      <div class="menu-item"><span class="item-name">Hot Chocolate</span><span class="item-dots"></span><span class="item-price">35 DH</span></div>
+      <div class="menu-item"><span class="item-name">Spanish Latte</span><span class="item-dots"></span><span class="item-price">45 DH</span></div>
+      <div class="menu-item"><span class="item-name">White Mocha</span><span class="item-dots"></span><span class="item-price">45 DH</span></div>
+      <div class="menu-item"><span class="item-name">Pistachio Latte</span><span class="item-dots"></span><span class="item-price">45 DH</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PANEL: POUR-OVER ── -->
+<div class="menu-panel" id="tab-pourover">
+  <div class="menu-category">
+    <div class="category-header">
+      <span class="category-title">Pour-Over</span>
+      <span class="material-symbols-outlined category-icon">water_drop</span>
+    </div>
+    <div class="menu-items">
+      <div class="menu-item"><span class="item-name">Ethiopia</span><span class="item-dots"></span><span class="item-price">58 DH</span></div>
+      <div class="menu-item"><span class="item-name">Kenya</span><span class="item-dots"></span><span class="item-price">58 DH</span></div>
+      <div class="menu-item"><span class="item-name">Tanzania</span><span class="item-dots"></span><span class="item-price">55 DH</span></div>
+      <div class="menu-item"><span class="item-name">Guatemala</span><span class="item-dots"></span><span class="item-price">55 DH</span></div>
+      <div class="menu-item"><span class="item-name">Mexico</span><span class="item-dots"></span><span class="item-price">55 DH</span></div>
+      <div class="menu-item"><span class="item-name">Peru</span><span class="item-dots"></span><span class="item-price">53 DH</span></div>
+      <div class="menu-item"><span class="item-name">Indonesia</span><span class="item-dots"></span><span class="item-price">58 DH</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── PANEL: NON COFFEE ── -->
+<div class="menu-panel" id="tab-noncoffee">
+  <div class="menu-category">
+    <div class="category-header">
+      <span class="category-title">Non Coffee</span>
+      <span class="material-symbols-outlined category-icon">local_cafe</span>
+    </div>
+    <div class="menu-items">
+      <div class="menu-item"><span class="item-name">Ube Latte</span><span class="item-dots"></span><span class="item-price">45 DH</span></div>
+      <div class="menu-item"><span class="item-name">Chai Latte</span><span class="item-dots"></span><span class="item-price">45 DH</span></div>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</section>
+
+<!-- Special Offers Banner -->
+
+<section class="py-[60px] px-16 bg-primary-container text-white overflow-hidden relative">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-12 relative z-10">
+    <div class="text-center md:text-left">
+      <span class="font-label-sm text-primary-fixed mb-4 inline-block uppercase tracking-[0.2em]">Limited Time Experience</span>
+      <h2 class="font-headline-lg text-headline-lg mb-6">Weekend Brunch Special</h2>
+      <p class="font-body-lg text-primary-fixed/80 max-w-xl mb-8">
+        Join us every Saturday and Sunday for a curated brunch menu featuring bottomless mimosas and chef-inspired seasonal delights.
+      </p>
+      <a class="inline-block bg-white text-primary px-10 py-3 font-label-sm uppercase tracking-widest hover:bg-primary-fixed transition-colors" href="#reservations">Book Now</a>
+    </div>
+    <div class="hidden lg:block relative">
+      <div class="w-80 h-80 border-2 border-white/20 absolute -top-4 -right-4 translate-x-12 translate-y-12"></div>
+      <img class="w-80 h-80 object-cover relative z-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuANEIm2hlVbLqd5zvLQnzt9TNkkF31z6YDIP9uJ1HYZJ_g7f-zUghvn4TreFp2LCExEMymCr1hXTMel5lsc8v3c6G0O2pdttGHc9mBsqvlwDGwGRSZtrbQuHte6RDfauphdDYLlMJKBzFALU5LuxwaOVX9l97rJ1JYCoeYrk75R04YxfwD0ccb5xj6KQcjMT-yvsQNDjnA6WxIeORT9wyjMhfWM-wKEhJmz7cWmoO0XdSjjPs0SCrJw5DWjY95bgKUGUQ0aduOAGoo" alt="Brunch"/>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+
+<section class="py-[120px] px-16 bg-white">
+  <div class="max-w-4xl mx-auto text-center">
+    <span class="material-symbols-outlined text-primary-container text-5xl mb-8" style="font-variation-settings: 'FILL' 1;">star</span>
+    <p class="font-headline-md text-headline-md text-primary italic leading-relaxed mb-12">
+      "The attention to detail at The Culinary Craft is simply unparalleled. From the first greeting to the final dessert, every moment was choreographed to perfection. A truly transformative dining experience."
+    </p>
+    <div class="flex flex-col items-center">
+      <span class="font-label-sm text-primary uppercase tracking-widest mb-1">Julianna Vance</span>
+      <span class="font-body-md text-secondary text-sm">Food Critic, The Daily Gastronomy</span>
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+
+<section class="pb-[120px] px-8" id="gallery">
+  <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+    <img class="w-full aspect-square object-cover hover:opacity-90 transition-opacity cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDpl07Y2MKSYkVDe60lTZkw57YBTHkgGtNLMBDR3O2SR09uEcyBWgYylFaI8ZDbMWn-tYhbPc3Q6qiG1w8_g6DRx610sLYwQd3oBDIERCj7n_E2bWNLBye_R3as-m-yDi6p4LS-Dpt5TgcKELtrjgzKIaIDeRJtT1lJq-afZp_6wJaxHjPItOCaHQ5hfbPtFEb15RD6fcfR0aBpHPow-UFktNtPfcdomuIdZjyZMG1gMSWdhk61BcyzUJePvqig1nDVq89OdURmt6c" alt="Oyster"/>
+    <img class="w-full aspect-square object-cover hover:opacity-90 transition-opacity cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYaiaKE78NYLQlP_EPwF3QfvzTYi85zGuIp8VIYn3J_USVXwSkzE-KCkBQca37Q6rVfgHS9K8gWsinTmXaM9T7ILaZSRJWzD3ksUZfrYmYXv2hwoze_St4NVVDAI6YErXK16uuB1VrM0QmIdlgDKqh1wqf_Ijt80eId8mxC9lahrTQZhcpCYE2EZiRHl9GC4ay8WRnUpzbjIOIQacGWr5UiqXK8J9FEiUTJhhjrbfI9V2oGSpdirjcdLrK3eAS_BopquW87dRHfKE" alt="Wine cellar"/>
+    <img class="w-full aspect-square object-cover hover:opacity-90 transition-opacity cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPoysFKSQF3gv59sIWqlhCTfcgECF2hUQPY6Cx-3B6QocJyXdfu2CHp2IpJXqla_f649_HoqaC9OQKVqR-fI_Zkjvo-bR_dsDDwKpaYlrnQro9rYF45BCBo0HIjIoYK_b6CZjTVDIM6qdPEzXVeHjaX6Dhw-9LMIto-cF36TwS3ckYBetQNlPm3rz1avDdX5fE5UIXLjEuyaLOZDnIIF1AdjZGfi5QpXf-rt1aFNKfMypjhvWY8DuDmDxD4S3Jv4SrwzaMK-w1YH0" alt="Dining room"/>
+    <img class="w-full aspect-square object-cover hover:opacity-90 transition-opacity cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXVMUn_o2ZHgsKUAwZtNjDyz3IqcLyrkK-GNR9Sku79f_0kyY9VbzLEqZhZRjv9_XAlZ28VOKTg75FT-5YaDiRh7Bp2_xTIEiHDkCzgdE0Al2UrNY62o8CnPloSpmRFV0y3i0xzbvBVzc_Lr8BWxGuOu25d8yJ9TBBRpUYdBufmDjJMLKmjGdXFwJYOKVl6GfyFgIYQGixddYqf1choXBtsuBs7IOMzE-v9BOLgKk7Bl5hIHzBAb3UnX4V4pAbdiNKOx6BXZmJV7M" alt="Cocktail"/>
+    <img class="w-full aspect-square object-cover hover:opacity-90 transition-opacity cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAI_zBugHy74e8MeucUmPQyiosmxLE-tTNKZC3G1ja-a1kHQCvoB3N6c1Ic6jB8EicbPv2CTPJWlnuA-VYR5F54YcZ8un8W9RmdXY1Rz-ZdmozsdXVmfusF3i7oZ3IVS9oPGy7MHjJxgLGPCCKMY3gbKTOFQKHsGDtkUda9gbsXddLq1WyRcQWCOSHbPygShMcUuB_6qnMK-1ignChr61X6GBeOXGcaXY_6L0ESSxJgNQVFTsm5dtpVRWGibhLSAyHTn8YLYJGW5dg" alt="Lamb rack"/>
+    <img class="w-full aspect-square object-cover hover:opacity-90 transition-opacity cursor-pointer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAP-OfuIGg_fvF_BTB03-gNJm6TO4PQsMgP25k-5K2QIR7AMt4MYm-KzZmE8viBJ00G4FMJDI5SzVwkldKAj6DadSX10VXlZVKIuI8cwdeCHLpgfm-MFG4iE09PV238Et2Yf_YTMEY8iHIPDz-dygTXHKdlVuCo4uqmGK1jn38L2H2oMVDq3MKcqM2_tdflqJTszMC5bLI5H7UGZnpqnADnlYUgmsX3pG3JPiX-XXlEbhVM8Z_w_k4r6-xnSLJ5c_kj9mvWnQUW4CI" alt="Sommelier"/>
+  </div>
+</section>
+
+<!-- Reservation Form -->
+
+<section class="py-[120px] px-16 bg-surface-container" id="reservations">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-16">
+    <div class="md:col-span-5">
+      <h2 class="font-headline-lg text-headline-lg text-primary mb-8">Secure Your Table</h2>
+      <p class="font-body-lg text-secondary mb-12">
+        Reservations are recommended for dinner service. For parties larger than 8, please contact our events team directly.
+      </p>
+      <div class="space-y-6">
+        <div class="flex items-start gap-4">
+          <span class="material-symbols-outlined text-primary mt-1">map</span>
+          <div>
+            <p class="font-label-sm text-primary mb-1">Our Location</p>
+            <p class="font-body-md text-secondary">124 Culinary Way, Artisan District, NY 10012</p>
+          </div>
+        </div>
+        <div class="flex items-start gap-4">
+          <span class="material-symbols-outlined text-primary mt-1">call</span>
+          <div>
+            <p class="font-label-sm text-primary mb-1">Phone</p>
+            <p class="font-body-md text-secondary">+1 (212) 555-0198</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="md:col-span-7 bg-white p-12 shadow-sm border border-outline-variant">
+      <form class="space-y-8" id="reservation-form">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="flex flex-col">
+            <label class="font-label-sm text-primary mb-2">Name</label>
+            <input id="res-name" class="border-0 border-b border-outline py-2 focus:ring-0 focus:border-primary transition-colors bg-transparent" type="text" placeholder="Your full name"/>
+          </div>
+          <div class="flex flex-col">
+            <label class="font-label-sm text-primary mb-2">Phone</label>
+            <input id="res-phone" class="border-0 border-b border-outline py-2 focus:ring-0 focus:border-primary transition-colors bg-transparent" type="tel" placeholder="+212 6XX XXX XXX"/>
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="flex flex-col">
+            <label class="font-label-sm text-primary mb-2">Date</label>
+            <input id="res-date" class="border-0 border-b border-outline py-2 focus:ring-0 focus:border-primary transition-colors bg-transparent" type="date"/>
+          </div>
+          <div class="flex flex-col">
+            <label class="font-label-sm text-primary mb-2">Time</label>
+            <input id="res-time" class="border-0 border-b border-outline py-2 focus:ring-0 focus:border-primary transition-colors bg-transparent" type="time"/>
+          </div>
+          <div class="flex flex-col">
+            <label class="font-label-sm text-primary mb-2">Guests</label>
+            <select id="res-guests" class="border-0 border-b border-outline py-2 focus:ring-0 focus:border-primary transition-colors bg-transparent">
+              <option>2 People</option>
+              <option>3 People</option>
+              <option>4 People</option>
+              <option>5+ People</option>
+            </select>
+          </div>
+        </div>
+        <button type="button" onclick="sendToWhatsApp()" class="w-full bg-primary-container text-white py-4 font-label-sm uppercase tracking-widest hover:bg-primary transition-colors mt-8 flex items-center justify-center gap-3">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.117.549 4.107 1.51 5.833L.057 23.215a.75.75 0 0 0 .92.92l5.382-1.453A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.885 0-3.655-.502-5.188-1.382l-.372-.214-3.853 1.041 1.041-3.853-.214-.372A9.956 9.956 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          Confirm via WhatsApp
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Map Section -->
+
+<section class="h-[400px] w-full overflow-hidden grayscale contrast-125 opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-700">
+  <img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv1OJ2Jzig86D8xblcnPxdkmAmfjSvd8LuxfQKcnvKt48iAmuEdGVHLTwHhBtp65Ixg40KdH0iL1NiuqFF5v31zNUCdjFQN4MfKalFJeDarn9Y2011T0fqHO2gxzM7vNf8vyvQMSFTqWD0wB7RYm8RJGMLCXOwFl__i0JFdnn2sMQzokTPiLZ-aSzR943QeBUC4UJbENnJK9zMU9F8nyFpBj8XdcFXA_ppNfe2_0JQ96xGvY37YbKy5zge6rR5N2fLkCSass9L2-E" alt="Map"/>
+</section>
+</main>
+
+<!-- Footer -->
+
+<footer class="bg-emerald-900 text-white w-full py-16 px-8">
+  <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 text-center md:text-left">
+    <div>
+      <h4 class="text-lg font-serif italic text-white mb-6">The Culinary Craft</h4>
+      <p class="font-serif text-sm tracking-wide text-emerald-200/60 leading-relaxed">
+        Elevating the dining experience through precision, passion, and the finest ingredients since 2012.
+      </p>
+    </div>
+    <div>
+      <h4 class="font-label-sm text-white mb-6 uppercase tracking-widest">Navigation</h4>
+      <ul class="space-y-4 font-serif text-sm tracking-wide">
+        <li><a class="text-emerald-200/60 hover:text-white transition-opacity" href="#menu">Menu</a></li>
+        <li><a class="text-emerald-200/60 hover:text-white transition-opacity" href="#reservations">Reservations</a></li>
+        <li><a class="text-emerald-200/60 hover:text-white transition-opacity" href="#about">About</a></li>
+        <li><a class="text-emerald-200/60 hover:text-white transition-opacity" href="#gallery">Gallery</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-sm text-white mb-6 uppercase tracking-widest">Legal</h4>
+      <ul class="space-y-4 font-serif text-sm tracking-wide">
+        <li><a class="text-emerald-200/60 hover:text-white transition-opacity" href="#">Privacy Policy</a></li>
+        <li><a class="text-emerald-200/60 hover:text-white transition-opacity" href="#">Terms of Service</a></li>
+        <li><a class="text-emerald-200/60 hover:text-white transition-opacity" href="#">Careers</a></li>
+        <li><a class="text-emerald-200/60 hover:text-white transition-opacity" href="#">Newsletter</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4 class="font-label-sm text-white mb-6 uppercase tracking-widest">Connect</h4>
+      <div class="flex justify-center md:justify-start gap-6">
+        <span class="material-symbols-outlined text-emerald-200/60 hover:text-white cursor-pointer">social_leaderboard</span>
+        <span class="material-symbols-outlined text-emerald-200/60 hover:text-white cursor-pointer">photo_camera</span>
+        <span class="material-symbols-outlined text-emerald-200/60 hover:text-white cursor-pointer">location_on</span>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto mt-16 pt-8 border-t border-emerald-800 flex flex-col md:flex-row justify-between items-center gap-4">
+    <p class="font-serif text-sm tracking-wide text-emerald-200/60">©️ 2024 The Culinary Craft. All rights reserved.</p>
+    <span class="font-serif text-sm text-emerald-200/60">Crafted in New York</span>
+  </div>
+</footer>
+
+<script>
+  // WhatsApp reservation
+  function sendToWhatsApp() {
+    const name    = document.getElementById('res-name').value.trim();
+    const phone   = document.getElementById('res-phone').value.trim();
+    const date    = document.getElementById('res-date').value;
+    const time    = document.getElementById('res-time').value;
+    const guests  = document.getElementById('res-guests').value;
+
+    if (!name || !date || !time) {
+      alert('Please fill in your name, date, and time.');
+      return;
+    }
+
+    const formattedDate = date ? new Date(date).toLocaleDateString('en-GB', { weekday:'long', year:'numeric', month:'long', day:'numeric' }) : '—';
+    const formattedTime = time || '—';
+
+    const msg = `🍽️ *New Reservation Request*\n\n `+
+                `👤 *Name:* ${name}\n `+
+                `📞 *Phone:* ${phone || '—'}\n `+
+                `📅 *Date:* ${formattedDate}\n `+
+                `🕐 *Time:* ${formattedTime}\n `+
+                `👥 *Guests:* ${guests}`;
+
+    const url = `https://wa.me/212691621718?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  }
+
+  // Mobile menu toggle
+  document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+    document.getElementById('mobileNavbar').classList.toggle('open');
+  });
+  document.querySelectorAll('#mobileNavbar a').forEach(a => {
+    a.addEventListener('click', () => document.getElementById('mobileNavbar').classList.remove('open'));
+  });
+
+  // Menu tab switching
+  const tabBtns = document.querySelectorAll('.menu-tab-btn');
+  const panels  = document.querySelectorAll('.menu-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      tabBtns.forEach(b => b.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      const target = document.getElementById('tab-' + btn.dataset.tab);
+      if (target) target.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
